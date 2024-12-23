@@ -2,8 +2,8 @@ loadPackage("TestIdeals", Reload => true)
 
 
 p = 7;
-m = 1; --m = 1 means working over Z/p^2
-e = 3;
+m = 0; --m = 1 means working over Z/p^2
+e = 2;
 R = ZZ[x,y]/(p^(m+1));
 f = x^2+y^3;
 
@@ -96,18 +96,25 @@ findJumpsbtw = (a,b,p,m,e,f,R) ->(
 jumps = findJumpsbtw(1, p^(e+m), p,m,e,f,R);
 print(jumps);
 
-file = "calculationsheet.txt";
-file << "c" << endl << close;
-
-
-
+file = "sheets/sheetcuspp" | toString(p) | "e" | toString(e) | "m" | toString(m) | ".txt";
+file << "p = " << p << endl << close;
+file << "m = " << m << endl;
+file << "e = " << e << endl;
+file << "f = " << f << endl;
+file << "R = " << R << endl;
+file << "Jumps = " << jumps << endl;
 
 
 for g in jumps do(
     print g;
+    file << g << endl;
     print adicExpansion(p, g);
+    file << adicExpansion(p, g) << endl;
     print(trim(cartierIdealPow(p,m,e,g,f,R)));
+    file << trim(cartierIdealPow(p,m,e,g,f,R)) << endl;
     print "----";
+    file << "----" << endl;
     );
-end
 
+file << close;
+end
